@@ -1,0 +1,135 @@
+/* Bottom Navigation — components/Bottom Navigation.md. Tokens only. */
+
+/* Belt: surface, hairline (inside, out of layout), full-round radius */
+.hb-bottom-navigation {
+  position: relative; display: flex; box-sizing: border-box; width: 100%;
+  border-radius: var(--corner-radius-circular);
+  background: var(--component-bottom_navigation-surface-default);
+}
+.hb-bottom-navigation.is-cell { display: inline-flex; width: auto; }
+.hb-bottom-navigation::after, .hb-bottom-navigation-segment::after { /* strokes drawn inside, excluded from layout */
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  border: var(--stroke-width-hairline) solid var(--component-bottom_navigation-stroke-default);
+}
+:root[data-mode="Lux"] .hb-bottom-navigation { /* effect style Lux/Surface/Surface 1 (spec: Elevation). No primitive matches the spec colour 746545; nearest Opacity/Lux ramp. */
+  box-shadow: 1px 1px 5px 0 var(--primitive-opacity-lux-10);
+}
+
+/* Viewport: clips and scrolls horizontally; no inner padding */
+.hb-bottom-navigation .viewport {
+  position: relative; display: flex; flex: 1 1 auto; min-width: 0;
+  overflow-x: auto; overflow-y: hidden; scrollbar-width: none;
+  border-radius: var(--corner-radius-circular);
+}
+.hb-bottom-navigation .viewport::-webkit-scrollbar { display: none; }
+.hb-bottom-navigation .row { display: flex; align-items: center; gap: var(--space-zero); flex: 1 0 auto; }
+.hb-bottom-navigation[data-scroll=true] .row { flex: 0 0 auto; }
+
+/* Segment: the touch target */
+.hb-bottom-navigation-segment {
+  position: relative; display: flex; align-items: stretch; justify-content: center; overflow: hidden;
+  box-sizing: border-box; min-height: var(--size-touch_target);
+  padding: 0; margin: 0; border: 0; background: none; font: inherit; cursor: pointer;
+  border-radius: var(--corner-radius-circular); -webkit-tap-highlight-color: transparent;
+  flex: 1 1 0; min-width: 0;
+}
+.hb-bottom-navigation[data-scroll=true] .hb-bottom-navigation-segment,
+.hb-bottom-navigation.is-cell .hb-bottom-navigation-segment {
+  flex: 0 0 auto; min-width: 82px; /* spec Geometry: segment minimum width 82, no token */
+}
+.hb-bottom-navigation-segment::after { border-color: transparent; }
+.hb-bottom-navigation-segment:focus { outline: none; }
+
+/* Brand: selected stroke, selected label + icon, overlay on any segment */
+.hb-bottom-navigation-segment[data-brand=Havells] {
+  --bn-sel: var(--component-bottom_navigation-brand-havells_red-label-selected);
+  --bn-sel-icon: var(--component-bottom_navigation-brand-havells_red-icon-selected);
+  --bn-stroke: var(--component-bottom_navigation-brand-havells_red-stroke-selected);
+  --bn-hover: var(--component-bottom_navigation-brand-havells_red-overlay-hover);
+  --bn-pressed: var(--component-bottom_navigation-brand-havells_red-overlay-pressed);
+}
+.hb-bottom-navigation-segment[data-brand=Lloyd] {
+  --bn-sel: var(--component-bottom_navigation-brand-lloyd_blue-label-selected);
+  --bn-sel-icon: var(--component-bottom_navigation-brand-lloyd_blue-icon-selected);
+  --bn-stroke: var(--component-bottom_navigation-brand-lloyd_blue-stroke-selected);
+  --bn-hover: var(--component-bottom_navigation-brand-lloyd_blue-overlay-hover);
+  --bn-pressed: var(--component-bottom_navigation-brand-lloyd_blue-overlay-pressed);
+}
+.hb-bottom-navigation-segment[data-brand=Crabtree] {
+  --bn-sel: var(--component-bottom_navigation-brand-crabtree_green-label-selected);
+  --bn-sel-icon: var(--component-bottom_navigation-brand-crabtree_green-icon-selected);
+  --bn-stroke: var(--component-bottom_navigation-brand-crabtree_green-stroke-selected);
+  --bn-hover: var(--component-bottom_navigation-brand-crabtree_green-overlay-hover);
+  --bn-pressed: var(--component-bottom_navigation-brand-crabtree_green-overlay-pressed);
+}
+.hb-bottom-navigation-segment[data-brand=Standard] {
+  --bn-sel: var(--component-bottom_navigation-brand-standard_blue-label-selected);
+  --bn-sel-icon: var(--component-bottom_navigation-brand-standard_blue-icon-selected);
+  --bn-stroke: var(--component-bottom_navigation-brand-standard_blue-stroke-selected);
+  --bn-hover: var(--component-bottom_navigation-brand-standard_blue-overlay-hover);
+  --bn-pressed: var(--component-bottom_navigation-brand-standard_blue-overlay-pressed);
+}
+.hb-bottom-navigation-segment[data-brand=Product] {
+  --bn-sel: var(--component-bottom_navigation-brand-product_black-label-selected);
+  --bn-sel-icon: var(--component-bottom_navigation-brand-product_black-icon-selected);
+  --bn-stroke: var(--component-bottom_navigation-brand-product_black-stroke-selected);
+  --bn-hover: var(--component-bottom_navigation-brand-product_black-overlay-hover);
+  --bn-pressed: var(--component-bottom_navigation-brand-product_black-overlay-pressed);
+}
+
+/* State layer: padding sets the width; Selected = Yes pads wider */
+.hb-bottom-navigation-segment .layer {
+  display: flex; align-items: center; justify-content: center; flex: 1 1 auto;
+  padding: var(--space-small) var(--space-medium); border-radius: var(--corner-radius-circular);
+}
+.hb-bottom-navigation-segment[aria-selected=true] .layer { padding: var(--space-small) var(--space-large); }
+.hb-bottom-navigation-segment .content { display: flex; flex-direction: column; align-items: center; gap: var(--space-xs); }
+.hb-bottom-navigation-segment .label-row { display: flex; align-items: center; gap: var(--space-xxs); }
+.hb-bottom-navigation-segment .label { white-space: nowrap; color: var(--component-bottom_navigation-label-unselected); }
+.hb-bottom-navigation-segment .ms {
+  font-size: var(--size-icon-xl); width: 1em; height: 1em; overflow: hidden;
+  color: var(--component-bottom_navigation-icon-unselected);
+}
+.hb-bottom-navigation-segment .badge {
+  width: 8px; height: 8px; /* spec Geometry: badge 8 × 8, no token */
+  border-radius: var(--corner-radius-circular); background: var(--component-bottom_navigation-badge-default);
+}
+
+/* Selected: fill + brand stroke at the mode-aware width + brand label/icon */
+.hb-bottom-navigation-segment[aria-selected=true] { background: var(--component-bottom_navigation-segment-surface-selected); }
+.hb-bottom-navigation-segment[aria-selected=true]::after {
+  border: var(--component-bottom_navigation-stroke_width-selected) solid var(--bn-stroke);
+}
+.hb-bottom-navigation-segment[aria-selected=true] .label { color: var(--bn-sel); }
+.hb-bottom-navigation-segment[aria-selected=true] .ms { color: var(--bn-sel-icon); }
+:root[data-mode="Lux"] .hb-bottom-navigation-segment[aria-selected=true] { /* effect style Lux/Surface/Surface 2 (spec: Elevation) */
+  box-shadow: 3px 3px 9px 0 var(--primitive-opacity-neutral-dark-10), inset 3px 3px 9px 0 color-mix(in srgb, var(--primitive-neutral-0) 25%, transparent);
+}
+
+/* States. Hover 10% > Pressed 5%; alpha is in the token. */
+@media (hover: hover) {
+  .hb-bottom-navigation-segment:not(:disabled):hover .layer { background: var(--bn-hover); }
+}
+.hb-bottom-navigation-segment.is-hover .layer { background: var(--bn-hover); }
+.hb-bottom-navigation-segment:not(:disabled):active .layer,
+.hb-bottom-navigation-segment.is-pressed .layer { background: var(--bn-pressed); }
+/* Focus replaces the stroke: Stroke/Focus/Default at Bold, inside, no overlay */
+.hb-bottom-navigation-segment:focus-visible::after,
+.hb-bottom-navigation-segment.is-focused::after {
+  border: var(--stroke-width-bold) solid var(--stroke-focus-default);
+}
+.hb-bottom-navigation-segment:focus-visible .layer,
+.hb-bottom-navigation-segment.is-focused .layer { background: none; }
+.hb-bottom-navigation-segment:disabled { opacity: 0.5; cursor: default; }
+
+/* Demo phone frame: a 360 screen, belt inset Space/Medium each side (spec Geometry) */
+.hb-bottom-navigation-phone {
+  width: 360px; box-sizing: border-box; display: flex; flex-direction: column; gap: var(--space-medium);
+  padding: var(--space-medium);
+  background: var(--surface-neutral-canvas-default);
+  outline: var(--stroke-width-regular) solid var(--stroke-on_neutral-low_contrast-stroke_1-default); /* outline: frame stays 360 inside */
+}
+.hb-bottom-navigation-phone [role=tabpanel] {
+  padding: var(--space-xl) var(--space-medium); color: var(--text-neutral-on_low_contrast-low_emphasis-default);
+}
+.hb-bottom-navigation-belt-box { width: 328px; } /* spec Geometry: 328 belt on a 360 screen */

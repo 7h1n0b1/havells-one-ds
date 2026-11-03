@@ -1,0 +1,3 @@
+@import url('../checkbox/checkbox.css'); /* shared selection-control core */
+/* Check Circle — components/Check Circle.md. Differs from Checkbox only in the circular state layer. */
+.hb-check-circle .visible { border-radius: var(--corner-radius-circular); }

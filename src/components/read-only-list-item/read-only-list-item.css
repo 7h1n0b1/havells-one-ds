@@ -1,0 +1,31 @@
+/* Read-only List_Item — components/Read-only List_Item.md. Tokens only. No states. */
+.hb-read-only-list-item { /* outer frame: col, fill, min Size/Touch_Target (optical floor, not a target) */
+  position: relative; display: flex; flex-direction: column; width: 100%; margin: 0;
+  min-height: var(--size-touch_target); padding: var(--space-zero); gap: var(--space-zero);
+  border-radius: var(--corner-radius-zero);
+}
+.hb-read-only-list-item .state-layer { /* structural only, never fills */
+  display: flex; align-items: center; gap: var(--space-medium); width: 100%; box-sizing: border-box;
+  min-height: var(--size-touch_target); padding: var(--space-small) var(--space-medium); background: none;
+}
+.hb-read-only-list-item .leading { display: flex; flex: none; }
+.hb-read-only-list-item .leading .ms { font-size: var(--size-icon-xl); width: 1em; height: 1em; overflow: hidden;
+  color: var(--icon-on_neutral-low_contrast-high_emphasis-default); }
+.hb-read-only-list-item .media { /* Media: 40 slot, no size token (Properties, Leading Element) */
+  display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;
+  border-radius: var(--corner-radius-circular); background: var(--surface-neutral-low_contrast-surface_2-default);
+}
+.hb-read-only-list-item .media .ms { font-size: var(--size-icon-xl); color: var(--icon-on_neutral-low_contrast-low_emphasis-default); }
+.hb-read-only-list-item .content { display: flex; flex-direction: column; gap: var(--space-xxs); flex: 1; min-width: 0; margin: 0; }
+.hb-read-only-list-item .overline, .hb-read-only-list-item .supporting { color: var(--text-neutral-on_low_contrast-low_emphasis-default); }
+.hb-read-only-list-item .title, .hb-read-only-list-item .value { color: var(--text-neutral-on_low_contrast-high_emphasis-default); }
+.hb-read-only-list-item .trailing { display: flex; align-items: center; gap: var(--space-small); flex: none; margin: 0; text-align: right; }
+
+/* Divider: 1 dp line, stroke align CENTER on the bottom edge, takes no height */
+.hb-read-only-list-item .divider {
+  position: absolute; left: 0; right: 0; bottom: calc(var(--stroke-width-regular) / -2);
+  height: var(--stroke-width-regular); background: var(--stroke-on_neutral-low_contrast-stroke_1-default);
+}
+
+/* Demo frame: a 360-wide screen (Header.md / Tabs.md Geometry reference width) */
+.hb-read-only-list-item-screen { width: 360px; }

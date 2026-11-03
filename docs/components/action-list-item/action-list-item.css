@@ -1,0 +1,58 @@
+/* Action List_Item — components/Action List_Item.md. Tokens only. */
+.hb-action-list-item { /* outer frame: col, fill, min Size/Touch_Target, carries the tap target */
+  position: relative; display: flex; flex-direction: column; width: 100%;
+  min-height: var(--size-touch_target); padding: var(--space-zero); margin: 0; gap: var(--space-zero);
+  border: 0; background: none; border-radius: var(--corner-radius-zero);
+  font: inherit; color: inherit; text-align: left; cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.hb-action-list-item:focus { outline: none; }
+/* Focused: outer frame, Stroke/Focus/Default at Stroke Width/Bold, outside the row (Geometry: "adds 2 dp outside") */
+.hb-action-list-item:focus-visible, .hb-action-list-item.is-focused {
+  outline: var(--stroke-width-bold) solid var(--stroke-focus-default); outline-offset: 0;
+}
+.hb-action-list-item .state-layer {
+  display: flex; align-items: center; gap: var(--space-medium); width: 100%; box-sizing: border-box;
+  min-height: var(--size-touch_target); padding: var(--space-small) var(--space-medium);
+  border-radius: var(--corner-radius-zero);
+}
+.hb-action-list-item .leading { display: flex; flex: none; }
+.hb-action-list-item .leading .ms { font-size: var(--size-icon-xl); width: 1em; height: 1em; overflow: hidden;
+  color: var(--icon-on_neutral-low_contrast-high_emphasis-default); }
+.hb-action-list-item .media { /* Media: 40 slot, no size token (Properties, Leading Element) */
+  display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;
+  border-radius: var(--corner-radius-circular); background: var(--surface-neutral-low_contrast-surface_2-default);
+}
+.hb-action-list-item .media .ms { font-size: var(--size-icon-xl); color: var(--icon-on_neutral-low_contrast-low_emphasis-default); }
+.hb-action-list-item .content { display: flex; flex-direction: column; gap: var(--space-xxs); flex: 1; min-width: 0; }
+.hb-action-list-item .overline, .hb-action-list-item .supporting, .hb-action-list-item .meta-text {
+  color: var(--text-neutral-on_low_contrast-low_emphasis-default);
+}
+.hb-action-list-item .title { color: var(--text-neutral-on_low_contrast-high_emphasis-default); }
+.hb-action-list-item .supporting { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } /* Content: truncates to one line */
+.hb-action-list-item .trailing { display: flex; align-items: center; gap: var(--space-small); flex: none; }
+.hb-action-list-item .trailing .ms { font-size: var(--size-icon-xl); width: 1em; height: 1em; overflow: hidden;
+  color: var(--icon-on_neutral-low_contrast-low_emphasis-default); }
+.hb-action-list-item .meta-text { text-align: right; }
+
+/* Divider: 1 dp line, stroke align CENTER on the bottom edge, takes no height */
+.hb-action-list-item .divider {
+  position: absolute; left: 0; right: 0; bottom: calc(var(--stroke-width-regular) / -2);
+  height: var(--stroke-width-regular); background: var(--stroke-on_neutral-low_contrast-stroke_1-default); pointer-events: none;
+}
+
+/* States: overlay tokens carry their own alpha */
+@media (hover: hover) {
+  .hb-action-list-item:not(:disabled):hover .state-layer { background: var(--component-list_item-overlay-hover); }
+}
+.hb-action-list-item.is-hover .state-layer { background: var(--component-list_item-overlay-hover); }
+.hb-action-list-item:not(:disabled):active .state-layer,
+.hb-action-list-item.is-pressed .state-layer { background: var(--component-list_item-overlay-pressed); }
+.hb-action-list-item.is-focused .state-layer { background: none; }
+
+/* Disabled: State layer at 50%, divider untouched */
+.hb-action-list-item:disabled { cursor: default; }
+.hb-action-list-item:disabled .state-layer { opacity: 0.5; }
+
+/* Demo frame: a 360-wide screen (Header.md / Tabs.md Geometry reference width) */
+.hb-action-list-item-screen { width: 360px; }
+.hb-action-list-item-log { color: var(--text-neutral-on_low_contrast-low_emphasis-default); }

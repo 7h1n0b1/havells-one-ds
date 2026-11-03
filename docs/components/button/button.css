@@ -1,0 +1,84 @@
+/* Button — components/Button.md. Tokens only. */
+.hb-button { /* touch target */
+  display: inline-flex; align-items: center; justify-content: center; vertical-align: middle;
+  height: var(--size-touch_target); min-width: var(--size-touch_target);
+  padding: 0; margin: 0; border: 0; background: none; border-radius: var(--corner-radius-zero);
+  font: inherit; color: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.hb-button:focus { outline: none; }
+.hb-button:focus-visible, .hb-button.is-focused {
+  outline: var(--stroke-width-bold) solid var(--stroke-focus-default); outline-offset: 0;
+}
+.hb-button .visible {
+  position: relative; display: inline-flex; overflow: hidden; box-sizing: content-box;
+  border-radius: var(--corner-radius-circular);
+}
+.hb-button .content { display: inline-flex; align-items: center; gap: var(--space-small); white-space: nowrap; }
+.hb-button .ms { width: 1em; height: 1em; overflow: hidden; }
+
+/* Size */
+.hb-button[data-size=Large]  .content { padding: var(--space-small) var(--space-medium); }
+.hb-button[data-size=Medium] .content { padding: var(--space-small) var(--space-number-12); }
+.hb-button[data-size=Small]  .content { padding: var(--space-xs) var(--space-small); }
+.hb-button[data-size=Large]  { --icon: var(--size-icon-large); }
+.hb-button[data-size=Medium] { --icon: var(--size-icon-medium); }
+.hb-button[data-size=Small]  { --icon: var(--size-icon-small); }
+.hb-button .ms, .hb-button .spinner { font-size: var(--icon); }
+
+/* Type */
+.hb-button[data-type=Filled] .visible {
+  background: linear-gradient(180deg, var(--component-button-filled-surface-gradient_1) 0%, var(--component-button-filled-surface-gradient_2) 100%);
+  color: var(--component-button-filled-text-default);
+  --ic: var(--component-button-filled-icon-default);
+  --ov-hover: var(--component-button-filled-overlay-hover);
+  --ov-pressed: var(--component-button-filled-overlay-hover); /* spec: Filled pressed uses the Hover token */
+}
+.hb-button[data-type=Outlined] .visible {
+  background: var(--component-button-outlined-surface-default);
+  border: var(--stroke-width-regular) solid var(--component-button-outlined-stroke-default);
+  color: var(--component-button-outlined-text-default);
+  --ic: var(--component-button-outlined-icon-default);
+  --ov-hover: var(--component-button-outlined-overlay-hover);
+  --ov-pressed: var(--component-button-outlined-overlay-pressed);
+}
+.hb-button[data-type=Text] .visible {
+  color: var(--component-button-text-text-default);
+  --ic: var(--component-button-text-icon-default);
+  --ov-hover: var(--component-button-text-overlay-hover);
+  --ov-pressed: var(--component-button-text-overlay-pressed);
+}
+.hb-button .ms { color: var(--ic); }
+
+/* Overlay */
+.hb-button .visible::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; }
+@media (hover: hover) {
+  .hb-button:not(:disabled):not([aria-busy=true]):hover .visible::after { background: var(--ov-hover); }
+  .hb-button[data-type=Filled]:not(:disabled):not([aria-busy=true]):hover .visible { box-shadow: 0 1px 2px 0 var(--primitive-opacity-neutral-dark-10); } /* effect style Button/Hover */
+}
+.hb-button.is-hover .visible::after { background: var(--ov-hover); }
+.hb-button[data-type=Filled].is-hover .visible { box-shadow: 0 1px 2px 0 var(--primitive-opacity-neutral-dark-10); }
+.hb-button:not(:disabled):not([aria-busy=true]):active .visible::after,
+.hb-button.is-pressed .visible::after { background: var(--ov-pressed); }
+.hb-button:not(:disabled):not([aria-busy=true]):active .visible,
+.hb-button.is-pressed .visible { box-shadow: none; }
+
+/* Disabled: 50% at the pill, target unchanged */
+.hb-button:disabled { cursor: default; }
+.hb-button:disabled .visible { opacity: 0.5; }
+
+/* Loading: content kept in layout, hidden from the eye only */
+.hb-button[aria-busy=true] { cursor: progress; }
+.hb-button[aria-busy=true] .content > * { visibility: hidden; }
+.hb-button .spinner { position: absolute; inset: 0; margin: auto; width: 1em; height: 1em; display: none; }
+.hb-button[aria-busy=true] .spinner { display: block; }
+
+/* Spinner: 8 ticks, faded group steps clockwise every 300 ms, 2.4 s cycle */
+.spinner line { stroke: currentColor; stroke-linecap: round; animation: hb-tick 2.4s infinite; }
+@keyframes hb-tick {
+  0%    { opacity: .4; animation-timing-function: ease-out; }
+  12.5% { opacity: .2; animation-timing-function: ease-out; }
+  25%   { opacity: .2; animation-timing-function: ease-out; }
+  37.5% { opacity: 1; }
+  87.5% { opacity: 1; animation-timing-function: ease-out; }
+  100%  { opacity: .4; }
+}

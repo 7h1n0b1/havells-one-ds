@@ -1,0 +1,69 @@
+/* Header — components/Header.md. Tokens only. Select all is a Button, Type = Text. */
+@import url('../button/button.css');
+
+.hb-header {
+  display: flex; flex-direction: column; width: 100%; box-sizing: border-box;
+  padding: var(--space-zero); gap: var(--space-xs); border-radius: var(--corner-radius-zero);
+  color: var(--component-header-text-default);
+}
+.hb-header[data-surface=Solid] { background: var(--component-header-surface-default); }
+.hb-header[data-surface=Transparent] { background: none; }
+/* Effect style TopBarSurface: x 0, y 4, blur 8, spread 0 (Tokens). Only built for Solid. */
+.hb-header[data-surface=Solid][data-shadow=Yes] { box-shadow: 0 4px 8px 0 var(--primitive-opacity-neutral-dark-10); }
+
+/* Status bar: drawn art, heights from Geometry (no token; build takes the platform inset) */
+.hb-header .status-bar {
+  display: flex; align-items: center; justify-content: space-between; box-sizing: border-box;
+  padding: 0 var(--space-medium); /* art inset: not specified, placeholder only */
+}
+.hb-header[data-device=Android] .status-bar { height: 28px; }
+.hb-header[data-device=Notch] .status-bar { height: 44px; }
+.hb-header[data-device="Dynamic Island"] .status-bar { height: 54px; }
+.hb-header .status-bar .clock { color: var(--component-header-text-default); }
+.hb-header .status-bar .glyphs { display: flex; gap: var(--space-xxs); }
+.hb-header .status-bar .ms { font-size: var(--size-icon-large); width: 1em; height: 1em; overflow: hidden; color: var(--component-header-icon-default); }
+
+/* Header contents: the touch-target row */
+.hb-header .contents {
+  display: flex; align-items: center; height: var(--size-touch_target);
+  padding: var(--space-zero) var(--space-xs); gap: var(--space-zero);
+}
+.hb-header .title-block { display: flex; flex-direction: column; justify-content: center; gap: var(--space-xxs); flex: 1; min-width: 0; padding: var(--space-zero); }
+.hb-header .title, .hb-header .subtitle { margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hb-header .title { color: var(--component-header-text-default); }
+.hb-header .subtitle { color: var(--component-header-text-subtitle); }
+.hb-header .trailing { display: flex; align-items: center; justify-content: center; gap: var(--space-zero); flex: none; }
+
+/* .Header_Action: 48 target, 40 circular state layer, 24 icon */
+.hb-header-action {
+  display: flex; align-items: center; justify-content: center; flex: none; box-sizing: border-box;
+  width: var(--size-touch_target); height: var(--size-touch_target); padding: var(--space-xs); margin: 0;
+  border: 0; background: none; border-radius: var(--corner-radius-zero);
+  font: inherit; color: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.hb-header-action .layer {
+  display: flex; align-items: center; justify-content: center; box-sizing: border-box;
+  width: 40px; height: 40px; /* State layer fixed 40: Layout table, no token */
+  padding: var(--space-small); border-radius: var(--corner-radius-circular);
+}
+.hb-header-action .ms { font-size: var(--size-icon-xl); width: 1em; height: 1em; overflow: hidden; color: var(--component-header-icon-default); }
+.hb-header-action:focus { outline: none; }
+/* Focused: Stroke/Focus/Default at Stroke Width/Bold, drawn inside the 48 target */
+.hb-header-action:focus-visible, .hb-header-action.is-focused {
+  outline: var(--stroke-width-bold) solid var(--stroke-focus-default); outline-offset: calc(var(--stroke-width-bold) * -1);
+}
+/* Overlay tokens carry their alpha in the value */
+@media (hover: hover) {
+  .hb-header-action:not(:disabled):hover .layer { background: var(--component-header-overlay-hover); }
+}
+.hb-header-action.is-hover .layer { background: var(--component-header-overlay-hover); }
+.hb-header-action:not(:disabled):active .layer,
+.hb-header-action.is-pressed .layer { background: var(--component-header-overlay-pressed); }
+.hb-header-action.is-focused .layer { background: none; }
+/* Disabled: whole action at 50% */
+.hb-header-action:disabled { opacity: 0.5; cursor: default; }
+
+/* Demo frames: Geometry widths, Android 360, Notch / Dynamic Island 393 */
+.hb-header-screen { width: 360px; }
+.hb-header-screen[data-device=Notch], .hb-header-screen[data-device="Dynamic Island"] { width: 393px; }
+.hb-header-log { color: var(--text-neutral-on_low_contrast-low_emphasis-default); }

@@ -1,0 +1,53 @@
+@import url('../radio-button/radio-button.css');
+@import url('../check-circle/check-circle.css'); /* both pull in the Checkbox core */
+/* Selection List_Item — components/Selection List_Item.md. Tokens only. */
+.hb-selection-list-item {
+  display: flex; flex-direction: column; width: 100%; min-height: var(--size-touch_target);
+  cursor: pointer; -webkit-tap-highlight-color: transparent; outline: none;
+}
+.hb-selection-list-item:focus-visible, .hb-selection-list-item.is-focused {
+  outline: var(--stroke-width-bold) solid var(--stroke-focus-default); outline-offset: 0;
+}
+.hb-selection-list-item .layer {
+  display: flex; align-items: center; gap: var(--space-medium); min-height: var(--size-touch_target); box-sizing: border-box;
+  padding: var(--space-small) var(--space-medium);
+}
+.hb-selection-list-item .leading { display: flex; }
+.hb-selection-list-item .leading .icon {
+  font-size: var(--size-icon-xl); width: var(--size-icon-xl); height: var(--size-icon-xl); overflow: hidden;
+  color: var(--icon-on_neutral-low_contrast-high_emphasis-default);
+}
+/* Selection List_Item.md Anatomy: media is a 40 slot, no token. Placeholder fill only. */
+.hb-selection-list-item .media {
+  width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+  background: var(--surface-neutral-low_contrast-surface_3-default);
+  color: var(--icon-on_neutral-low_contrast-low_emphasis-default);
+}
+.hb-selection-list-item .content { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--space-xxs); }
+.hb-selection-list-item .overline, .hb-selection-list-item .supporting { color: var(--text-neutral-on_low_contrast-low_emphasis-default); }
+.hb-selection-list-item .title { color: var(--text-neutral-on_low_contrast-high_emphasis-default); }
+.hb-selection-list-item [hidden] { display: none; }
+.hb-selection-list-item .trailing { display: flex; gap: var(--space-small); width: var(--size-touch_target); height: var(--size-touch_target); }
+.hb-selection-list-item .divider {
+  margin: 0; border: 0; border-top: var(--stroke-width-regular) solid var(--stroke-on_neutral-low_contrast-stroke_1-default);
+}
+
+/* Row and atom share State: tint both */
+@media (hover: hover) {
+  .hb-selection-list-item:not(.is-disabled):hover .layer { background: var(--component-list_item-overlay-hover); }
+  .hb-selection-list-item:not(.is-disabled):hover .trailing .visible { background: var(--component-selection_control-overlay-hover); }
+}
+.hb-selection-list-item.is-hover .layer { background: var(--component-list_item-overlay-hover); }
+.hb-selection-list-item.is-hover .trailing .visible { background: var(--component-selection_control-overlay-hover); }
+.hb-selection-list-item:not(.is-disabled):active .layer,
+.hb-selection-list-item.is-pressed .layer { background: var(--component-list_item-overlay-pressed); }
+.hb-selection-list-item:not(.is-disabled):active .trailing .visible,
+.hb-selection-list-item.is-pressed .trailing .visible { background: var(--component-selection_control-overlay-pressed); }
+
+/* Disabled: state layer 50%; the atom's own Disabled variant adds its 50% (as in Figma) */
+.hb-selection-list-item.is-disabled { cursor: default; }
+.hb-selection-list-item.is-disabled .layer { opacity: 0.5; }
+
+/* Matrix cells hug; give rows room to read */
+.mx .hb-selection-list-item { min-width: calc(var(--space-xl) * 4); }
+.hb-selection-list-item-list { flex: 1 1 100%; }

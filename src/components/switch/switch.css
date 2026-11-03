@@ -1,0 +1,59 @@
+/* Switch — components/Switch.md. Tokens only. */
+.hb-switch { /* outer: 48 tall so the handle's 48 × 48 target is inside the hit area */
+  /* Switch.md Layout: Track fixed 62 × 32, no token. Handle centre sits half a track height from the end. */
+  --track-w: 62px; --track-h: 32px; --cap: calc(var(--track-h) / 2);
+  display: inline-flex; align-items: center; vertical-align: middle; position: relative;
+  height: var(--size-touch_target); width: var(--track-w);
+  padding: 0; margin: 0; border: 0; background: none; font: inherit; color: inherit;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.hb-switch:focus { outline: none; }
+.hb-switch .track {
+  position: relative; display: block; width: var(--track-w); height: var(--track-h);
+  border-radius: var(--corner-radius-circular);
+}
+.hb-switch[data-on=true] .track { background: var(--component-switch-track-on-default); }
+.hb-switch[data-on=false] .track {
+  background: var(--component-switch-track-off-surface-default);
+  box-shadow: inset 0 0 0 var(--stroke-width-bold) var(--component-switch-track-off-stroke-default);
+}
+/* Focus ring on the track, outside the pill; replaces the off stroke while held */
+.hb-switch:focus-visible .track, .hb-switch.is-focused .track {
+  outline: var(--stroke-width-bold) solid var(--stroke-focus-default); outline-offset: 0; box-shadow: none;
+}
+
+/* Target 48 (Space/XS padding) > State-layer 40 (Space/Small) > Handle shape */
+.hb-switch .target {
+  position: absolute; top: 50%; translate: 0 -50%; display: flex; padding: var(--space-xs);
+  left: calc(var(--cap) - var(--size-touch_target) / 2);
+}
+.hb-switch[data-on=true] .target { left: calc(var(--track-w) - var(--cap) - var(--size-touch_target) / 2); }
+.hb-switch .layer {
+  display: flex; align-items: center; justify-content: center; border-radius: var(--corner-radius-circular);
+  width: calc(var(--size-touch_target) - 2 * var(--space-xs)); height: calc(var(--size-touch_target) - 2 * var(--space-xs));
+}
+.hb-switch .handle { border-radius: var(--corner-radius-circular); }
+/* Switch.md Tokens: Numbers/24 and Numbers/16 — not exported to tokens.css, values from the spec */
+.hb-switch[data-on=true]  .handle { width: 24px; height: 24px; background: var(--component-switch-handle-on-default); }
+.hb-switch[data-on=false] .handle { width: 16px; height: 16px; background: var(--component-switch-handle-off-default); }
+
+@media (hover: hover) {
+  .hb-switch:not(.is-disabled):hover .layer { background: var(--component-switch-overlay-hover); }
+}
+.hb-switch.is-hover .layer { background: var(--component-switch-overlay-hover); }
+.hb-switch:not(.is-disabled):active .layer,
+.hb-switch.is-pressed .layer { background: var(--component-switch-overlay-pressed); }
+
+/* Has Label (OPEN, review only): ON on the empty side of the on track, OFF on the empty side of the off track */
+.hb-switch .lbl { position: absolute; top: 50%; translate: 0 -50%; display: none; }
+.hb-switch[data-on=true] .lbl.on { display: block; left: var(--space-small); color: var(--component-switch-handle-on-default); }
+.hb-switch[data-on=false] .lbl.off { display: block; right: var(--space-small); color: var(--component-switch-handle-off-default); }
+
+/* Disabled: whole component at 50% */
+.hb-switch.is-disabled { opacity: 0.5; cursor: default; }
+.hb-switch[aria-busy=true] { cursor: progress; }
+
+/* Demo field: label leading, switch trailing */
+.hb-switch-field { display: inline-flex; align-items: center; gap: var(--space-medium); color: var(--text-neutral-on_low_contrast-high_emphasis-default); }
+.hb-switch-field label { cursor: pointer; }
+.hb-switch-field + .msg { margin: var(--space-xs) 0 0; color: var(--text-neutral-on_low_contrast-low_emphasis-default); }

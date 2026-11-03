@@ -1,0 +1,3 @@
+@import url('../checkbox/checkbox.css'); /* shared selection-control core */
+/* Radio Button — components/Radio Button.md. Differs from Checkbox only in the circular state layer. */
+.hb-radio-button .visible { border-radius: var(--corner-radius-circular); }

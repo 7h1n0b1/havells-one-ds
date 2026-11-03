@@ -1,0 +1,54 @@
+@import url('../switch/switch.css');
+/* Switch List_Item — components/Switch List_Item.md. Tokens only. */
+.hb-switch-list-item {
+  display: flex; flex-direction: column; width: 100%; min-height: var(--size-touch_target);
+  cursor: pointer; -webkit-tap-highlight-color: transparent; outline: none;
+}
+.hb-switch-list-item:focus-visible, .hb-switch-list-item.is-focused {
+  outline: var(--stroke-width-bold) solid var(--stroke-focus-default); outline-offset: 0;
+}
+.hb-switch-list-item > .layer {
+  display: flex; align-items: center; gap: var(--space-medium); min-height: var(--size-touch_target); box-sizing: border-box;
+  padding: var(--space-small) var(--space-medium);
+}
+.hb-switch-list-item .leading { display: flex; }
+.hb-switch-list-item .leading .icon {
+  font-size: var(--size-icon-xl); width: var(--size-icon-xl); height: var(--size-icon-xl); overflow: hidden;
+  color: var(--icon-on_neutral-low_contrast-high_emphasis-default);
+}
+/* Switch List_Item.md Anatomy: media is a 40 slot, no token. Placeholder fill only. */
+.hb-switch-list-item .media {
+  width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+  background: var(--surface-neutral-low_contrast-surface_3-default);
+  color: var(--icon-on_neutral-low_contrast-low_emphasis-default);
+}
+.hb-switch-list-item .content { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--space-xxs); }
+.hb-switch-list-item .overline, .hb-switch-list-item .supporting { color: var(--text-neutral-on_low_contrast-low_emphasis-default); }
+.hb-switch-list-item .title { color: var(--text-neutral-on_low_contrast-high_emphasis-default); }
+.hb-switch-list-item [hidden] { display: none; }
+/* Trailing 62 × 32 (spec Layout): the Switch's track; its 48 target overflows by design */
+.hb-switch-list-item .trailing { display: flex; align-items: center; gap: var(--space-small); width: 62px; height: 32px; }
+.hb-switch-list-item .trailing .hb-switch { height: 32px; }
+.hb-switch-list-item .divider {
+  margin: 0; border: 0; border-top: var(--stroke-width-regular) solid var(--stroke-on_neutral-low_contrast-stroke_1-default);
+}
+
+/* Row and Switch share State: tint both */
+@media (hover: hover) {
+  .hb-switch-list-item:not(.is-disabled):hover > .layer { background: var(--component-list_item-overlay-hover); }
+  .hb-switch-list-item:not(.is-disabled):hover .hb-switch .layer { background: var(--component-switch-overlay-hover); }
+}
+.hb-switch-list-item.is-hover > .layer { background: var(--component-list_item-overlay-hover); }
+.hb-switch-list-item.is-hover .hb-switch .layer { background: var(--component-switch-overlay-hover); }
+.hb-switch-list-item:not(.is-disabled):active > .layer,
+.hb-switch-list-item.is-pressed > .layer { background: var(--component-list_item-overlay-pressed); }
+.hb-switch-list-item:not(.is-disabled):active .hb-switch .layer,
+.hb-switch-list-item.is-pressed .hb-switch .layer { background: var(--component-switch-overlay-pressed); }
+.hb-switch-list-item[aria-busy=true] { cursor: progress; }
+
+/* Disabled / Offline: state layer 50%; the Switch's own disabled adds its 50% (as in Figma) */
+.hb-switch-list-item.is-disabled { cursor: default; }
+.hb-switch-list-item.is-disabled > .layer { opacity: 0.5; }
+
+.mx .hb-switch-list-item { min-width: calc(var(--space-xl) * 4); }
+.hb-switch-list-item-list { flex: 1 1 100%; }

@@ -1,0 +1,58 @@
+/* Day Picker — components/Day Picker.md. Tokens only. */
+.hb-day-picker {
+  display: flex; align-items: center; gap: var(--space-zero);
+  padding: var(--space-zero) var(--space-number-12); /* spec: 12 a side so seven 48 targets fit at 360 */
+}
+
+/* Unit: the 48 touch target and the focus ring's home; no fill */
+.hb-day-picker-unit {
+  position: relative; flex: 1 1 0; min-width: var(--size-touch_target); height: var(--size-touch_target);
+  display: flex; align-items: center; justify-content: center;
+  border-radius: var(--corner-radius-zero); cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.hb-day-picker-unit input { /* visually hidden; the label is the target */
+  position: absolute; inset: 0; margin: 0; opacity: 0; pointer-events: none;
+}
+.hb-day-picker-unit .layer {
+  width: 40px; height: 40px; /* spec Geometry: state layer 40, no token */
+  display: flex; align-items: center; justify-content: center; border-radius: var(--corner-radius-circular);
+}
+.hb-day-picker-unit .chip {
+  width: 32px; height: 32px; /* spec Geometry: day chip 32, no token */
+  display: flex; align-items: center; justify-content: center; border-radius: var(--corner-radius-circular);
+  color: var(--component-day_picker-label-default);
+}
+.hb-day-picker-unit[data-day=Weekend] .chip { color: var(--component-day_picker-label-weekend); }
+.hb-day-picker-unit:has(input:checked) .chip {
+  background: var(--component-day_picker-surface-selected); color: var(--component-day_picker-label-selected);
+}
+
+/* States. Hover 10% > Pressed 5%; alpha is in the token. */
+@media (hover: hover) {
+  .hb-day-picker-unit:not(:has(input:disabled)):hover .layer { background: var(--component-day_picker-overlay-hover); }
+}
+.hb-day-picker-unit.is-hover .layer { background: var(--component-day_picker-overlay-hover); }
+.hb-day-picker-unit:not(:has(input:disabled)):active .layer,
+.hb-day-picker-unit.is-pressed .layer { background: var(--component-day_picker-overlay-pressed); }
+/* Focus: ring on the 48 frame, inside, circular. No overlay. */
+.hb-day-picker-unit:has(input:focus-visible),
+.hb-day-picker-unit.is-focused { border-radius: var(--corner-radius-circular); }
+.hb-day-picker-unit:has(input:focus-visible)::after,
+.hb-day-picker-unit.is-focused::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  border: var(--stroke-width-bold) solid var(--stroke-focus-default);
+}
+.hb-day-picker-unit:has(input:focus-visible) .layer,
+.hb-day-picker-unit.is-focused .layer { background: none; }
+.hb-day-picker-unit:has(input:disabled) { opacity: 0.5; cursor: default; }
+
+/* Demo frame: the 360 screen the owner ruling sizes the row for (12 + 48×7 + 12) */
+.hb-day-picker-phone {
+  width: 360px; box-sizing: border-box; display: flex; flex-direction: column; gap: var(--space-small);
+  padding: var(--space-medium) var(--space-zero);
+  background: var(--surface-neutral-canvas-default);
+  outline: var(--stroke-width-regular) solid var(--stroke-on_neutral-low_contrast-stroke_1-default); /* outline: frame stays 360 inside */
+}
+.hb-day-picker-phone .caption {
+  padding: var(--space-zero) var(--space-medium); color: var(--text-neutral-on_low_contrast-low_emphasis-default);
+}
